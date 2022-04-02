@@ -38,20 +38,31 @@ using vvll = vector<vll>;
 using vp = vector<pair<int, int>>;
 using vs = vector<string>;
 
+vvi G;
+
 signed main() {
-    int q; cin >> q;
-    deque<int> deq;
-    rep(_, q) {
-        int t, x; cin >> t >> x;
-        if (t == 1) deq.push_front(x);
-        if (t == 2) deq.push_back(x);
-        if (t == 3) cout << deq.at(x - 1) << newl;
+    int n, m; cin >> n >> m;
+    G = vvi(n);
+    rep(_, m) {
+        int a, b; cin >> a >> b;
+        G[a - 1].push_back(b - 1);
+        G[b - 1].push_back(a - 1);
     }
+
+    rep(i, n) sort(all(G[i]));
+
+    int ans = 0;
+    rep(i, n) {
+        int iter = upper_bound(all(G[i]), i) - begin(G[i]);
+        if (iter == 1) ans++;
+    }
+    
+    cout << ans << newl;
 }
 
 /*
     僕の解法
-    Deque(atが使えるの始めてしった)
+    upper_boundでOで探索
     解説
-    同じ
+    普通に隣接リストの線形探索のほうがはやいですよ(O(N + M))
 */
