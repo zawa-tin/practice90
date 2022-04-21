@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
-// 044
-// https://atcoder.jp/contests/typical90/tasks/typical90_ar
+// 048
+// https://atcoder.jp/contests/typical90/tasks/typical90_av
 
 // clang-format off
 
