@@ -17,12 +17,10 @@ using namespace std;
 using ld = long double;
 using pii = pair<int, int>;
 using vi = vector<int>;
-using vvi = vector<vi>;
-using vvvi = vector<vvi>;
+using vvi = vector<vector<int>>;
+using vvvi = vector<vector<vector<int>>>;
 using vp = vector<pii>;
-using vvp = vector<vp>;
 using vs = vector<string>;
-using vvc = vector<vector<char>>;
 
 void debug(vector<int> a) {
     for (auto x : a) cout << x << ' ';
@@ -39,9 +37,31 @@ inline bool chmax(T1 &a, T2 b) {return a < b and (a = b, true);}
 template <typename T1, typename T2>
 inline bool chmin(T1 &a, T2 b) {return a > b and (a = b, true);}
 
-const int supl = LONG_LONG_MAX - 100;
+// inline bool in(int y, int x) {return 0 <= x and x < w and 0 <= y and y < h;}
+
+const int supl = 1e18 - 100;
 
 void main_() {
+    int h, w; cin >> h >> w;
+    vvi ps(h, vi(w)); for (auto& y : ps) for (auto& x : y) cin >> x;
+
+    int ans = 0;
+    for (int bit = 0 ; bit < (1 << h) ; bit++) {
+        vi use;
+        for (int i = 0 ; i < h ; i++) if (bit & (1 << i)) use.emplace_back(i);
+        map<int, int> mp;
+        for (int i = 0 ; i < w ; i++) {
+            set<int> st;
+            for (auto u : use) st.emplace(ps[u][i]);
+            if (st.size() == 1) mp[*st.begin()] += use.size();
+        }
+
+        int t = 0;
+        for (auto [x, c] : mp) chmax(t, c);
+        chmax(ans, t);
+    }
+
+    cout << ans << endl;
 }
 
 signed main() {
